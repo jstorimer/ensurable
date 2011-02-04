@@ -1,7 +1,7 @@
 Ensurable
 =========
 
-FYI this is very alpha software, also it's not meant to be used in production. Actually it aborts in production so...
+FYI this is very alpha software, also it's not meant to be used in production. It just noops in production.
 
 Use Case
 -------
@@ -19,7 +19,7 @@ Installation
 
 In your Gemfile:
     
-    gem 'ensurable'
+    gem 'ensurable', :group => [:development, :test]
 
 If you're using Rails you'll want to include this in your application.rb before the `require 'rails/all'`. This makes sure that this gem gets executed as early as possible and is able to ensure things before your app cries that it needs Msyql or Redis or something.
 
@@ -28,6 +28,8 @@ If you're using Rails you'll want to include this in your application.rb before 
 
     require 'ensurable/now'
     require 'rails/all'
+
+Otherwise if you're using Bundler you'll want to `require 'ensurable/now'` before Bundler.require for best results.
 
 Usage
 -----
