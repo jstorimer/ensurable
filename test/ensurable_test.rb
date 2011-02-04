@@ -1,35 +1,35 @@
 require 'helper'
 
 class EnsurableTest < MiniTest::Unit::TestCase
-  def test_aborts_if_rails_env_is_production
+  def test_noops_if_rails_env_is_production
     Rails.env = 'production'
 
-    Ensurable.expects(:abort)
+    Ensurable.expects(:instance_eval).never
     Ensurable.ensure {}
 
     Rails.env = nil
   end
 
-  def test_no_abort_if_rails_env_is_development
+  def test_works_if_rails_env_is_development
     Rails.env = 'development'
 
-    Ensurable.expects(:abort).never
+    Ensurable.expects(:instance_eval)
     Ensurable.ensure {}
   end
 
-  def test_abort_if_rails_env_var_is_production
+  def test_noop_if_rails_env_var_is_production
     ENV['RAILS_ENV'] = 'production'
 
-    Ensurable.expects(:abort)
+    Ensurable.expects(:instance_eval).never
     Ensurable.ensure {}
 
     ENV['RAILS_ENV'] = nil
   end
 
-  def test_abort_if_rack_env_var_is_production
+  def test_noop_if_rack_env_var_is_production
     ENV['RACK_ENV'] = 'production'
 
-    Ensurable.expects(:abort)
+    Ensurable.expects(:instance_eval).never
     Ensurable.ensure {}
 
     ENV['RACK_ENV'] = nil

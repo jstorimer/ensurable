@@ -10,4 +10,6 @@ module Rails
   end
 end
 
+# this will keep tests quiet that write to $stderr
+$stderr = File.new('/dev/null', 'w')
 

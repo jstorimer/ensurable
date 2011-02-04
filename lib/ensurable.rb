@@ -13,11 +13,18 @@ module Ensurable
     # @yield optional block to allow any ensurables to be required
     def ensure(file = nil, &bloc)
       abortables = []
-      abortables << (defined?(Rails) && Rails.respond_to?(:env) && Rails.env)
+
+      begin
+        abortables << Rails.env
+      rescue NameError, NoMethodError
+      end
       abortables << ENV['RAILS_ENV']
       abortables << ENV['RACK_ENV']
 
-      abort('Ensurable is not meant for production use!') if abortables.any? {|a| a == 'production'}
+      if abortables.any? {|a| a == 'production'}
+        $stderr.puts("Ensurable gem is not meant for use in production, nooping.")
+        return
+      end
 
       if file
         instance_eval file.read
