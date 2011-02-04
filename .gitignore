@@ -7,4 +7,5 @@ pkg/*
 .yardoc
 /doc
 /coverage
+.rvmrc
 
