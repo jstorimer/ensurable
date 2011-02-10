@@ -6,5 +6,9 @@ module Ensurable
       num = `ps aux | grep redis-server | wc -l`.to_i
       true if num > 1
     end
+
+    def version
+      `redis-cli info | grep version | cut -d : -f 2`
+    end
   end
 end

@@ -82,4 +82,57 @@ class EnsurableTest < MiniTest::Unit::TestCase
 
     File.delete(file.path)
   end
+
+  def test_installed_with_explicit_version
+    Ensurable::Git.any_instance.expects(:version).returns('1.7.3.5')
+
+    Ensurable.ensure do
+      installed 'git', '1.7.3.5'
+    end
+  end
+
+  def test_installed_with_gt_version
+    Ensurable::Git.any_instance.expects(:version).returns('1.7.3.5')
+
+    Ensurable.ensure do
+      installed 'git', '> 1.7'
+    end
+  end
+
+  def test_installed_with_invalid_version
+    Ensurable::Git.any_instance.expects(:version).returns('1.7.3.5')
+
+    assert_raises(Ensurable::MissingVersion) {
+      Ensurable.ensure do
+        installed 'git', '> 1.8'
+      end
+    }
+  end
+
+  def test_running_with_explicit_version
+    Ensurable::Redis.any_instance.expects(:version).returns('1.7.3.5')
+
+    Ensurable.ensure do
+      running 'redis', '1.7.3.5'
+    end
+  end
+
+  def test_running_with_gt_version
+    Ensurable::Redis.any_instance.expects(:version).returns('1.7.3.5')
+
+    Ensurable.ensure do
+      running 'redis', '> 1.7'
+    end
+  end
+
+  def test_running_with_invalid_version
+    Ensurable::Redis.any_instance.expects(:version).returns('1.7.3.5')
+
+    assert_raises(Ensurable::MissingVersion) {
+      Ensurable.ensure do
+        running 'redis', '> 1.8'
+      end
+    }
+  end
+
 end

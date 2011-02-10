@@ -51,9 +51,11 @@ Currently git and redis are the only supported deps. More are planned as needed.
 Roadmap/TODO
 -------
 
-* Allow passing of version numbers when defining ensurables. eg. installed 'git', '> 1.7' 
 * Add another method to the Ensurable::#{program} API that lets users know how to install missing deps.
 * Nicer error message when there's a missing dep. The default exception raised text is ugly.
+* Alias 'using' to 'installed'
+* Reduce duplication in version checking code
+* How far can Rubygems version checking really get us?
 
 Contributing
 -----------
